@@ -66,37 +66,62 @@ let pokemonRepository = (function () {
             height: 1.3, 
             type: ['fairy']
         }
-];
+    ];
 
-function add(pokemon) {
-    if (typeof pokemon === 'object') {
-        pokemonList.push(pokemon);
-    } else {
-        console.log('pokemon is not correct');
+    function add(pokemon) {
+        if (typeof pokemon === 'object') {
+            pokemonList.push(pokemon);
+     }
     }
-}
-function getAll() {
-    return pokemonList;
-}
 
-return {
-    add: add,
-    getAll: getAll
-};
+    function getAll() {
+        return pokemonList;
+    }
+
+    function filterByName(name) {
+        return pokemonList.filter(function(pokemon) {
+            return pokemon.name === name;
+        });
+    }
+
+    function addListItem(pokemon) {
+        let pokemonList = document.querySelector('.pokemon-list');
+        let li= document.createElement('li');
+        pokemonList.appendChild(li);
+        li.classList.add('pokemon-name-list');
+
+        let button = document.createElement('button');
+        button.innerText = pokemon.name;
+        li.appendChild(button);
+
+        button.classList.add('pokemon-name-button');
+
+        addEventListener(button, pokemon);
+    }
+
+    function addEventListener(button, pokemon) {
+        button.addEventListener('click', function() {
+            showDetails(pokemon);
+        });
+
+        function showDetails(pokemon) {
+            console.log(pokemon);
+        }
+    }
+    return {
+        add: add,
+        getAll: getAll,
+        addListItem: addListItem,
+        filterByName: filterByName
+    }
 }) ();
 
 pokemonRepository.add({name: 'Arcanine', height: 1.9, type: ['fire']});
 
-/* print Pokemon names and corresponding heights from pokemonList:
-   // print name and height with message if the height is less than to 0.6 m
-   // print name and height with message if the height is more than to 1.2 m
-   // otherwise print only name and height */
+// print Pokemon names and corresponding heights from pokemonList:
 pokemonRepository.getAll().forEach(function(pokemon) {
-    if (pokemon.height < 0.6) { 
-        document.write('<p>' + pokemon.name + ' (height: ' + pokemon.height + ' m)' + ' - Small, but mighty! </p>');
-    } else if (pokemon.height > 1.2) {
-        document.write('<p>' + pokemon.name + ' (height: ' + pokemon.height + ' m)' + ' - Wow, that\'s a big one! </p>');
-    } else {
-        document.write('<p>' + pokemon.name + ' (height: ' + pokemon.height + ' m)' + ' </p>');
-    }
+   pokemonRepository.addListItem(pokemon);
 });
+
+let filterByName = pokemonRepository.filterByName('Bulbasaur');
+console.log(filterByNameResult[0]);
