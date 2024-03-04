@@ -11,7 +11,7 @@ let pokemonRepository = (function () {
         ) {
             pokemonList.push(pokemon);
         } else {
-            console.log('Pokemon is not correct');
+            console.error('Pokemon is not correct');
         }
     }
 
@@ -49,7 +49,7 @@ let pokemonRepository = (function () {
     }
 
     function loadDetails(item) {
-        let url = item.detailsUrl;
+        let url = item.detailsURL;
         return fetch(url).then(function (response) {
             return response.json();
         }).then(function (details) {
@@ -89,9 +89,9 @@ pokemonRepository.loadList().then(function() {
 });
 
 function showLoadingMessage() {
-    document.getElementById('loadingMessage');
+    document.getElementById('loadingMessage').style.display = 'block';
 }
 
 function hideLoadingMessage() {
-    document.getElementById('loadingMessage');
+    document.getElementById('loadingMessage').style.display = 'none';
 }
