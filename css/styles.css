@@ -40,9 +40,13 @@ a{
     text-decoration: none;
 }
 
-.pokemon-list button{
-    width: 200px;
-    height: 200px;
+.pokemon-button{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    width: 250px;
+    height: 150px;
     padding: 16px;
     margin: 10px;
     text-align: center;
@@ -55,6 +59,11 @@ a{
     display: flex;
     flex-wrap: wrap;
     align-items: space-evenly;
+}
+
+.pokemon-image {
+    width: 100px; 
+    height: 100px; 
 }
 
 .main-container {
@@ -125,6 +134,8 @@ input {
     list-style-type: none;
     
 }
+
+
 /* Media Query for mobile and tablet screens up to 767px and below */
 @media all and (max-width: 499px){
     button{
