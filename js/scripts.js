@@ -38,20 +38,19 @@ let pokemonRepository = (function () {
         return fetch(apiUrl).then(function(response) {
             return response.json();
         }).then(function(json) {
-            json.results.forEach(function(pokemon) {
-                let pokemonDetails = {
-                    name: pokemon.name,
-                    detailsURL: pokemon.url
+            json.results.forEach(function(item) {
+                let pokemon = {
+                    name: item.name,
+                    detailsURL: item.url
                 };
                 add(pokemon);
-                console.log(pokemonDetails);
             });
         }).catch(function (e) {
             console.error(e);
         });
     }
 
-    function showModal(title, text, img) {
+    function showModal(item) {
         let modalContainer = document.querySelector('#modal-container');
 
         //Clear all existing modal content
@@ -67,13 +66,13 @@ let pokemonRepository = (function () {
         closeButtonElement.addEventListener('click', hideModal);
 
         let titleElement = document.createElement('h1');
-        titleElement.innerText = title;
+        titleElement.innerText = item.name;
 
         let contentElement = document.createElement('p');
-        contentElement.innerText = text;
+        contentElement.innerText = 'Height: ' + item.height + 'm';
 
         let imgElement = document.createElement('img');
-        imgElement.setAttribute('src', img);
+        imgElement.setAttribute('src', item.imgURL);
 
         modal.appendChild(closeButtonElement);
         modal.appendChild(titleElement);
@@ -82,9 +81,6 @@ let pokemonRepository = (function () {
         modalContainer.appendChild(modal);
 
         modalContainer.classList.add('is-visible');
-        document.querySelector('#show-modal').addEventListener('click', () => {
-            showModal('pokemon');
-        });
     }
 
     // Function to hide modal when visible
@@ -101,6 +97,7 @@ let pokemonRepository = (function () {
     });
 
     // Hide modal when user clicks outside of modal
+    let modalContainer = document.querySelector('#modal-container');
     modalContainer.addEventListener('click', (e) => {
         let target = e.target;
         if (target === modalContainer) {
@@ -113,7 +110,7 @@ let pokemonRepository = (function () {
         return fetch(url).then(function (response) {
             return response.json();
         }).then(function (details) {
-            item.imgUrl = details.sprites.front_default; 
+            item.imgURL = details.sprites.front_default; 
             item.height = details.height;
             item.types = details.types;
             item.abilities = details.abilities;
@@ -124,7 +121,7 @@ let pokemonRepository = (function () {
 
     function showDetails(pokemon) {
         loadDetails(pokemon).then(function(){
-            console.log(pokemon);
+            showModal(pokemon);
         }); 
     }
 

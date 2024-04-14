@@ -9,14 +9,13 @@ text-color--white--: #ffffff;
 }
 
 body {
-    background-color: #95CA86;
-    color: #ffffff;
-    margin: 0 6px;
+    background-color: #ffffff;
+    color: #191929;
+    margin: 0px;
+    padding: auto;
 }
 
-h1 {
-    
-}
+
 .app-container {
     background-color: #ffffff;
 }
@@ -30,7 +29,7 @@ h1 {
 
 }
 .navbar-title{
-    color: #ffffff;
+    color: #fff;
     text-decoration: none;
     font-size: 25px;
     padding: 5px;
@@ -41,7 +40,7 @@ a{
     text-decoration: none;
 }
 
-button {
+.pokemon-list button{
     width: 200px;
     height: 200px;
     padding: 16px;
@@ -68,23 +67,63 @@ input {
     text-align: center;
 }
 
-li{
-    list-style-type: none;
-}
-
 #modal-container {
     display: none;
 }
 #modal-container.is-visible {
+    display: block;
     position: fixed;
-    padding: 15px;
+    padding: 20px;
     box-sizing: border-box;
     top: 0;
     left: 0;
-    width: 50%;
-    height: 50%;
-    text-decoration: underline;
-    cursor: pointer;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999; 
+    overflow: auto; 
+    text-align: center;
+  }
+
+.modal {
+  margin: auto;
+  display: inline-block;
+  box-sizing: border-box;
+  background: #fff;
+  padding: 15px;
+  width: 100%;
+  max-width: 500px;
+  text-align: center;
+}
+
+.modal-close {
+  float: right;
+  border: 0;
+  background: none;
+}
+
+.modal-close:hover {
+  cursor: pointer;
+}
+
+#x-icon{
+    height: auto;
+    width: 15px;
+}
+
+.modal h1 {
+  margin-top: 0;
+  font-size: 20px;
+}
+
+.modal p {
+  margin-bottom: 0;
+  font-size: 16px;
+}
+
+.pokemon-list{
+    list-style-type: none;
+    
 }
 /* Media Query for mobile and tablet screens up to 767px and below */
 @media all and (max-width: 499px){
@@ -102,3 +141,4 @@ li{
         font-weight: 600;
     }   
 }
+
