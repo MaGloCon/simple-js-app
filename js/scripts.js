@@ -8,7 +8,8 @@ let pokemonRepository = (function () {
         if (
             typeof pokemon === 'object' &&
             'name' in pokemon &&
-            'detailsURL' in pokemon
+            'detailsURL' in pokemon &&
+            'imageUrl' in pokemon
         ) {
             pokemonList.push(pokemon);
         } else {
@@ -27,6 +28,7 @@ let pokemonRepository = (function () {
             return response.json();
         }).then(function(json) {
             let promises = json.results.map(function(item) { //map the results to an array of objects and fetch the details of each Pokemon
+                return fetch(item.url).then(function(response) {
                     return response.json();
                 }).then(function(details) {
                     let pokemon = {//create a new object with the Pokemon's details
@@ -48,11 +50,23 @@ let pokemonRepository = (function () {
        
        // Create a button element 
        let button = document.createElement('button');
-       button.innerText = pokemon.name;
-       button.classList.add('button-class');
-       listPokemon.appendChild(button);
-       pokemonList.appendChild(listPokemon);
+       button.classList.add('pokemon-button');
 
+       // Create an img element and set its src attribute to the Pokemon's image URL
+        let img = document.createElement('img');
+        img.src = pokemon.imageUrl;
+        img.classList.add('pokemon-image');
+        button.appendChild(img)
+
+        // Create a text node for the Pokemon's name and append it to the button
+        let textNode = document.createTextNode(pokemon.name);
+        button.appendChild(textNode);
+        
+        // Append the button to the list item and the list item to the Pokemon list
+        listPokemon.appendChild(button);
+        pokemonList.appendChild(listPokemon);
+
+        // Add an event listener to the button to show the Pokemon's details when clicked
        button.addEventListener('click', function(event) {
            showDetails(pokemon);
        });
