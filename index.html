@@ -4,19 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Basic JS App</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
     <link href="css/styles.css" rel="stylesheet" type="text/css">
 </head>
 <body>
     <div class="app-container">
         <nav class="navbar">
-            <a href="#" >
+            <a class="logo-container" href="index.html" >
+                <img src="img/pokeball.svg" alt="Pokeball" class="navbar-logo">
                 <h1 class="navbar-title">POKÉDEX</h1>
             </a>
-            <input type="text" id="search-bar" placeholder="Search Pokemon">
+             <input type="text" id="search-bar" placeholder="Search Pokémon">
         </nav>
-        <main class="main-container">
-            <ul class="pokemon-list"></ul>
-        </main>
+        <ul class="pokemon-list"></ul>
         <div id="modal-container"></div>
     </div>
     <script src="js/promise-polyfill.js"></script>
