@@ -1,7 +1,7 @@
 //IIFE to create a Pokemon repository
 let pokemonRepository = (function () {
     let pokemonList = [];
-    let apiUrl = 'https://pokeapi.co/api/v2/pokemon/?limit=151';
+    let apiUrl = 'https://pokeapi.co/api/v2/pokemon/?limit=200';
     
     // Add Pokemon to the list
     function add(pokemon) {
@@ -105,14 +105,27 @@ let pokemonRepository = (function () {
     function showModal(item) {
         let modalContainer = document.querySelector('#modal-container');
 
-        //Clear all existing modal content
+        //  Clear all existing modal content
         modalContainer.innerHTML = '';
 
-        //Create a new modal
+        //  Create a new modal
         let modal = document.createElement('div');
         modal.classList.add('modal');
+
+        // Set the background-color of modal based on the Pokemon's type
+        if (item.types && item.types.length > 0) {
+        let type = item.types[0].type.name; 
+        if (type === 'normal' && item.types.length > 1) {
+            type = item.types[1].type.name; 
+        }
+        modal.classList.add(type);
+        }
         
-        //Add new modal content
+        // Create a new div to hold the text elements
+        let textContainer = document.createElement('div');
+        textContainer.classList.add('text-container');
+
+        // Add new modal content
         let closeButtonElement = document.createElement('button');
         closeButtonElement.classList.add('modal-close');
         closeButtonElement.innerText = 'X';
@@ -136,54 +149,54 @@ let pokemonRepository = (function () {
         let abilitiesElement = document.createElement('p');
         abilitiesElement.innerText = 'Abilities: ' + item.abilities.map((ability) => ability.ability.name.charAt(0).toUpperCase() + ability.ability.name.slice(1)).join(', ');
         
-        //Toggle switch to convert height and weight between metric and imperial units
-        let toggleSwitch = document.createElement('label');
-        toggleSwitch.classList.add('switch');
+        // Create an icon element to convert units
+        let iconElement = document.createElement('img');
+        iconElement.src = './img/ruler.svg';
+        iconElement.className = 'ruler-icon';
 
-        let inputElement = document.createElement('input');
-        inputElement.setAttribute('type', 'checkbox');
-        inputElement.addEventListener('change', function() {
-            if (this.checked) {
-                let [height, weight] = toImperial(item.height, item.weight);
-                heightElement.innerText = 'Height: ' + height + ' ft';
-                weightElement.innerText = 'Weight: ' + weight + ' lbs';
+        iconElement.addEventListener('click', function() {
+            if (weightElement.innerText.includes('kg')) {
+                // Convert kg to lbs (1 kg is approximately 2.20462 lbs)
+                let weightInLbs = item.weight * 2.20462;
+                weightElement.innerText = 'Weight: ' + weightInLbs.toFixed(2) + ' lbs';
+        
+                // Convert meters to feet (1 meter is approximately 3.28084 feet)
+                let heightInFeet = item.height * 3.28084;
+                heightElement.innerText = 'Height: ' + heightInFeet.toFixed(2) + ' ft';
             } else {
-                let [height, weight] = toMetric(item.height, item.weight);
-                heightElement.innerText = 'Height: ' + height + ' m';
-                weightElement.innerText = 'Weight: ' + weight + ' kg';
+                // Convert back to metric units
+                weightElement.innerText = 'Weight: ' + item.weight + ' kg';
+                heightElement.innerText = 'Height: ' + item.height + ' m';
             }
         });
 
-        let sliderElement = document.createElement('span');
-        sliderElement.classList.add('slider', 'round');
-
-        let imperialElement = document.createElement('span');
-        imperialElement.innerText = 'Imperial';
-        imperialElement.style.float = 'left';
+        // Create a tooltip element
+        let tooltipElement = document.createElement('span');
+        tooltipElement.className = 'tooltip';
+        tooltipElement.innerText = 'Click to convert units';
+        tooltipElement.style.display = 'none'; 
+        iconElement.appendChild(tooltipElement);
         
-        let metricElement = document.createElement('span');
-        metricElement.innerText = 'Metric';
-        metricElement.style.float = 'right';
+        iconElement.addEventListener('mouseover', function() { // Show the tooltip when the mouse hovers over the image
+            tooltipElement.style.display = 'inline';
+        });
 
-        sliderElement.appendChild(imperialElement);
-        sliderElement.appendChild(metricElement);
+        iconElement.addEventListener('mouseout', function() { // Hide the tooltip when the mouse leaves the image
+            tooltipElement.style.display = 'none';
+        });
 
-        toggleSwitch.appendChild(inputElement);
-        toggleSwitch.appendChild(sliderElement);
-        toggleSwitch.appendChild(imperialElement);
-        toggleSwitch.appendChild(inputElement);
-        toggleSwitch.appendChild(sliderElement);
-        toggleSwitch.appendChild(metricElement);
+        // Append the elements to the textContainer
+        textContainer.appendChild(titleElement);
+        textContainer.appendChild(heightElement);
+        textContainer.appendChild(weightElement);
+        textContainer.appendChild(typesElement);
+        textContainer.appendChild(abilitiesElement);
+        textContainer.appendChild(iconElement);
         
         //Append modal content to the modal
         modal.appendChild(closeButtonElement);
         modal.appendChild(imgElement);
-        modal.appendChild(titleElement);
-        modal.appendChild(heightElement);
-        modal.appendChild(weightElement);
-        modal.appendChild(typesElement);
-        modal.appendChild(abilitiesElement);
-        modal.appendChild(toggleSwitch);
+        modal.appendChild(textContainer); 
 
         modalContainer.appendChild(modal);
 
@@ -213,38 +226,30 @@ let pokemonRepository = (function () {
         }
     });
 
-    function toImperial(height, weight) {
-        // Convert height from meters to feet and weight from kilograms to pounds
-        let heightInFeet = height * 3.28084;
-        let weightInPounds = weight * 2.20462;
-        return [heightInFeet.toFixed(2), weightInPounds.toFixed(2)];
-    }
-    
-    function toMetric(height, weight) {
-        // Convert height from feet to meters and weight from pounds to kilograms
-        let heightInMeters = height / 3.28084;
-        let weightInKilograms = weight / 2.20462;
-        return [heightInMeters.toFixed(2), weightInKilograms.toFixed(2)];
-    }
     // Search bar to filter Pokemon list by name
-    let searchBar = document.querySelector('#search-bar');
+    function searchBar() {
+        let searchBar = document.querySelector('#search-bar');
+        
+        searchBar.addEventListener('input', function() { 
+            let searchValue = searchBar.value.toLowerCase();
+            let filteredPokemon = pokemonList.filter(pokemon => pokemon.name.toLowerCase().startsWith(searchValue));
+            
+            // Clear the Pokemon list
+            let pokemonListElement = document.querySelector('.pokemon-list');
+            pokemonListElement.innerHTML = '';
 
-    searchBar.addEventListener('input', function() { 
-        // Get the value of the search bar and convert it to lowercase
-        let searchValue = searchBar.value.toLowerCase();
-    
-        // Filter the Pokemon list based on the search value
-        let filteredPokemon = pokemonList.filter(pokemon => pokemon.name.toLowerCase().startsWith(searchValue)); //
-    
-        // Clear the current list
-        let pokemonListElement = document.querySelector('.pokemon-list');
-        pokemonListElement.innerHTML = '';
-    
-        // Add the filtered Pokemon to the list 
-        filteredPokemon.forEach(pokemon => {
-            addListItem(pokemon);
+            // Display a message if the search value does not match any Pokemon, otherwise display the filtered Pokemon
+            if (filteredPokemon.length === 0) { 
+                pokemonListElement.innerText = "\n\n\n\n\n\nCan't find the Pokemon you are looking for";
+            } else {
+                filteredPokemon.forEach(pokemon => {
+                    addListItem(pokemon);
+                });
+            }
         });
-    });
+    }
+    searchBar();
+    
 
     return {
         add: add,
@@ -262,3 +267,4 @@ pokemonRepository.loadList().then(function() {
         pokemonRepository.addListItem(pokemon);
     });
 });
+
