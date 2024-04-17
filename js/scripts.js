@@ -49,12 +49,13 @@ let pokemonRepository = (function () {
 
     // Add Pokemon to the list as a button
     function addListItem(pokemon) {
-       let pokemonList = document.querySelector('.pokemon-list');
+       let pokemonList = document.querySelector('.list-group');
        let listPokemon = document.createElement('li');
+       listPokemon.classList.add('list-group-item', 'flex-container');
        
        // Create a button element 
        let button = document.createElement('button');
-       button.classList.add('pokemon-button');
+       button.classList.add('btn','pokemon-button', );
        button.classList.add(pokemon.type);
 
        // Create an img element and set its src attribute to the Pokemon's image URL
@@ -93,7 +94,7 @@ let pokemonRepository = (function () {
             console.error(e);
         });
     }
-
+/*
     // Show the Pokemon's details in a modal
     function showDetails(pokemon) {
         loadDetails(pokemon).then(function(){
@@ -249,7 +250,7 @@ let pokemonRepository = (function () {
         });
     }
     searchBar();
-    
+    */
 
     return {
         add: add,
@@ -257,7 +258,7 @@ let pokemonRepository = (function () {
         addListItem: addListItem,
         loadList: loadList,
         loadDetails: loadDetails,
-        showDetails: showDetails,
+        //showDetails: showDetails,
     }
 }) ();
 

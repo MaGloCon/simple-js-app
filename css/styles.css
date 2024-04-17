@@ -1,80 +1,36 @@
 :root {
     --primary-color: #191919;
-    --secondary-color: #95CA86;
-    --text-color--white--: #ffffff;
-    --font-family: 'Open Sans', sans-serif;
-}
-
-* {
-    box-sizing: border-box;
+    --font-color--white--: #ffffff;
+    --font-family: 'Open Sans', sans-serif; /*correct google font*/
 }
 
 body {
     background-color: #ffffff;
     color: #191929;
-    margin: 0px;
-    padding: 0;
     font-family: var(--font-family);
+    font-size: 16px;
 }
 
-
-.app-container {
-    background-color: #ffffff;
-}
-
-.navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #191919;
-    padding: 10px;
-    width: 100%;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-}
-
-.navbar-title{
-    color: #ffffff;
-    text-decoration: none;
+.navbar-brand{
     font-size: 23px;
     font-weight: 900;
-    padding: 5px;
-    margin: 5px;
 }
-
-a{
-    text-decoration: none;
-}
-
-.logo-container {
+.flex-container {
     display: flex;
-}
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
 
-img.navbar-logo {
-    width: 40px;
-    height: 40px;
-    margin: 5px;
 }
-
-#layer_1{
-    width: 20px;
-    height: 20px;
-}
-#search-bar{
-    width: 200px;
-    padding: 7px;
-    margin: 5px;
-    height: 30px;
-    border-radius: 20px;
-    border: 1px solid #191919;
-    text-align: center;
-
+.list-group-item{
+    width: 250px;
+    height: 150px;
+    display: flex;
 }
 
 .pokemon-button{
-    width: 250px;
-    height: 150px;
-    padding: 20px;
-    margin: 10px;
+    width: 100%;
+    height: 100%; 
     text-align: center;
     text-transform: capitalize;
     font-size: 16px;
@@ -85,6 +41,7 @@ img.navbar-logo {
     font-family: var(--font-family);
     text-shadow: #333333 0px 0px px;
 }
+
 
 .pokemon-list{
     display: flex;
@@ -99,12 +56,8 @@ img.navbar-logo {
     height: 87%;
 }
 
-ul.pokemon-list {
-    width: 100%;
-    padding: 0;
-    align-items: center;
-}
 
+/*
 #modal-container.is-visible {
     display: block;
     position: fixed;
@@ -163,7 +116,7 @@ ul.pokemon-list {
     margin-bottom: 0;
     font-size: 16px;
 }
-
+*/
 
 
 
