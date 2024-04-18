@@ -103,7 +103,7 @@ let pokemonRepository = (function () {
         let modalTypes = document.querySelector('#pokemonTypes');
         let modalAbilities = document.querySelector('#pokemonAbilities');
 
-        // Remove any existing type classes from and add type class to image container
+        // Remove any existing type classes and add type class to image container
         modalImgContainer.className = 'image-background';
         modalImgContainer.classList.add( item.type);
 
@@ -122,7 +122,7 @@ let pokemonRepository = (function () {
         modal.show();
         addCloseButtonEventListener(modal);
     }
-    
+
     // Add event listener to close button on modal
     function addCloseButtonEventListener(modal) {
         let closeButton = document.querySelector('.btn-close');
