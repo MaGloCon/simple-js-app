@@ -24,36 +24,38 @@
                 POKÉDEX
             </a>
             <div class="input-group-prepend">
-            <button class="btn btn-outline-light my-2 my-sm-0" type="button" id="search-icon">
-                <i class="fas fa-search"></i>
-            </button>
-            <div class="d-none" id="search-bar-container">
-                <input type="text" class="form-control" placeholder="Search Pokemon" id="search-bar">
-            </div>
-            </div>
-            
+                <button class="btn btn-outline-light my-2 my-sm-0" type="button" id="search-icon">
+                    <i class="fas fa-search"></i>
+                </button>
+                <div class="d-none" id="search-bar-container">
+                    <input type="text" class="form-control" placeholder="Search Pokemon" id="search-bar">
+                </div>
+            </div> 
         </div>
     </nav>
     <div class="list-group"></div>
     <div class="modal fade" id="pokemonModal" tabindex="-1" aria-labelledby="pokemonModalLabel" aria-hidden="true">
         <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="pokemonModalLabel">Pokemon Name</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true"><i class="fas fa-times"></i></span>
-                </button>           
-             </div>
-            <div class="modal-body">
-              <img id="pokemonImage" alt="Pokemon Image">
-              <p id="pokemonHeight"></p>
-              <p id="pokemonWeight"></p>
-              <p id="pokemonTypes"></p>
-              <p id="pokemonAbilities"></p>
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="pokemonModalLabel">Pokemon Name</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true"><i class="fas fa-times"></i></span>
+                    </button>           
+                </div>
+                 <div class="modal-body">
+                    <div class="image-background">
+                        <img id="pokemonImage" alt="Pokemon Image">
+                    </div>
+                    <p id="pokemonHeight"></p>
+                    <p id="pokemonWeight"></p>
+                    <p id="pokemonTypes"></p>
+                    <p id="pokemonAbilities"></p>
+                </div>
             </div>
-          </div>
         </div>
-      </div>
+    </div>
+    <!--JS: JQuery, Popper, and Bootrap-->
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>    

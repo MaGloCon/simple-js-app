@@ -47,16 +47,17 @@ let pokemonRepository = (function () {
         });
     }
 
+    // Add Pokemon to the list as a button
     function addListItem(pokemon) {
         let pokemonList = document.querySelector('.list-group');
         
         let listPokemon = document.createElement('li');
         listPokemon.classList.add('list-group-item');
-        listPokemon.classList.add(pokemon.type);
+        listPokemon.classList.add(pokemon.type); //add the type as a class to the list -- button color
         
         // Create a button element 
         let button = document.createElement('button');
-        button.classList.add('pokemon-button', 'btn-block', );
+        button.classList.add('pokemon-button', 'btn-block', 'btn-outline-light', 'text-dark');
         
     
         // Set the button text to the Pokemon's name
@@ -71,7 +72,6 @@ let pokemonRepository = (function () {
             showDetails(pokemon);
         });
     }
-    
 
     // Load the Pokemon details from the API
     function loadDetails(item) {
@@ -95,67 +95,74 @@ let pokemonRepository = (function () {
             showModal(pokemon);
         }); 
     }
-// Show the Pokemon's details in a modal
-function showModal(item) {
-    let modalTitle = document.querySelector('#pokemonModalLabel');
-    let modalImg = document.querySelector('#pokemonImage');
-    let modalHeight = document.querySelector('#pokemonHeight');
-    let modalWeight = document.querySelector('#pokemonWeight');
-    let modalTypes = document.querySelector('#pokemonTypes');
-    let modalAbilities = document.querySelector('#pokemonAbilities');
+    // Show the Pokemon's details in a modal
+    function showModal(item) {
+        let modalTitle = document.querySelector('#pokemonModalLabel');
+        let modalImgContainer = document.querySelector('.image-background');
+        let modalImg = document.querySelector('#pokemonImage', 'img');
+        let modalHeight = document.querySelector('#pokemonHeight');
+        let modalWeight = document.querySelector('#pokemonWeight');
+        let modalTypes = document.querySelector('#pokemonTypes');
+        let modalAbilities = document.querySelector('#pokemonAbilities');
 
-    // Set the modal elements
-    modalTitle.innerText = `${item.name.charAt(0).toUpperCase()}${item.name.slice(1)}`;
-    modalImg.src = item.imgURL;
-    modalHeight.innerText = `Height: ${item.height} m`;
-    modalWeight.innerText = `Weight: ${item.weight} kg`;
-    modalTypes.innerText = `Types: ${item.types.map(type => `${type.type.name.charAt(0).toUpperCase()}${type.type.name.slice(1)}`).join(', ')}`;
-    modalAbilities.innerText = `Abilities: ${item.abilities.map(ability => `${ability.ability.name.charAt(0).toUpperCase()}${ability.ability.name.slice(1)}`).join(', ')}`;
+        // Remove any existing type classes from and add type class to image container
+        modalImgContainer.className = 'image-background';
+        modalImgContainer.classList.add( item.type);
 
-    // Show the modal
-    let modal = new bootstrap.Modal(document.getElementById('pokemonModal'));
-    modal.show();
+        // Set the modal elements
+        modalTitle.innerText = `${item.name.charAt(0).toUpperCase()}${item.name.slice(1)}`;
+        modalImg.src = item.imgURL;
+        modalImg.classList.add('modal-image', 'img-fluid', 'mx-auto', 'd-block', 'pb-3', 'pt-3'); 
+        modalHeight.innerText = `Height: ${item.height} m`;
+        modalHeight.classList.add('pt-3');
+        modalWeight.innerText = `Weight: ${item.weight} kg`;
+        modalTypes.innerText = `Types: ${item.types.map(type => `${type.type.name.charAt(0).toUpperCase()}${type.type.name.slice(1)}`).join(', ')}`;
+        modalAbilities.innerText = `Abilities: ${item.abilities.map(ability => `${ability.ability.name.charAt(0).toUpperCase()}${ability.ability.name.slice(1)}`).join(', ')}`;
 
-    // Add event listener to close button
-    let closeButton = document.querySelector('.btn-close');
-    closeButton.addEventListener('click', function() {
-        modal.hide();
+        // Show the modal
+        let modal = new bootstrap.Modal(document.getElementById('pokemonModal'));
+        modal.show();
+
+        // Add event listener to close button
+        let closeButton = document.querySelector('.btn-close');
+        closeButton.classList.add('close-button');
+        closeButton.addEventListener('click', function() {
+            modal.hide();
+        });
+    }
+
+    // Search icon and searchBar toggle
+    let searchIcon = document.querySelector('#search-icon');
+    let searchBarContainer = document.querySelector('#search-bar-container');
+    searchIcon.addEventListener('click', function() {
+        searchBarContainer.classList.toggle('d-none');
     });
-}
-
-// Search icon and searchBar toggle
-let searchIcon = document.querySelector('#search-icon');
-let searchBarContainer = document.querySelector('#search-bar-container');
-searchIcon.addEventListener('click', function() {
-    searchBarContainer.classList.toggle('d-none');
-});
 
     // Search bar to filter Pokemon list by name
-function searchBar() {
-    let searchBar = document.querySelector('#search-bar');
-    
-    searchBar.addEventListener('input', function() { 
-        let searchValue = searchBar.value.toLowerCase();
-        let filteredPokemon = pokemonList.filter(pokemon => pokemon.name.toLowerCase().startsWith(searchValue));
+    function searchBar() {
+        let searchBar = document.querySelector('#search-bar');
         
-        // Clear the Pokemon list
-        let pokemonListElement = document.querySelector('.list-group');
-        pokemonListElement.innerHTML = '';
+        searchBar.addEventListener('input', function() { 
+            let searchValue = searchBar.value.toLowerCase();
+            let filteredPokemon = pokemonList.filter(pokemon => pokemon.name.toLowerCase().startsWith(searchValue));
+            
+            // Clear the Pokemon list
+            let pokemonListElement = document.querySelector('.list-group');
+            pokemonListElement.innerHTML = '';
 
-        // Display a message if the search value does not match any Pokemon, otherwise display the filtered Pokemon
-        if (filteredPokemon.length === 0) { 
-            pokemonListElement.innerText = "\n\n\n\n\n\nCan't find the Pokemon you are looking for";
-        } else {
-            filteredPokemon.forEach(pokemon => {
-                addListItem(pokemon);
-            });
-        }
-    });
-}
-searchBar();
-    
-    
-
+            // Display a message if the search value does not match any Pokemon, otherwise display the filtered Pokemon
+            if (filteredPokemon.length === 0) { 
+                let message = "Can't find the Pokemon you are looking for";
+                pokemonListElement.innerText = `\n\n\n\n\n\n${message}`;
+            } else {
+                filteredPokemon.forEach(pokemon => {
+                    addListItem(pokemon);
+                });
+            }
+        });
+    }
+    searchBar();
+        
     return {
         add: add,
         getAll: getAll,
