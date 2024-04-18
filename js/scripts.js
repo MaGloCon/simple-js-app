@@ -1,15 +1,14 @@
 //IIFE to create a Pokemon repository
 let pokemonRepository = (function () {
     let pokemonList = [];
-    let apiUrl = 'https://pokeapi.co/api/v2/pokemon/?limit=200';
+    let apiUrl = 'https://pokeapi.co/api/v2/pokemon/?limit=250';
     
     // Add Pokemon to the list
     function add(pokemon) {
         if (
             typeof pokemon === 'object' &&
             'name' in pokemon &&
-            'detailsURL' in pokemon &&
-            'imageUrl' in pokemon
+            'detailsURL' in pokemon
         ) {
             pokemonList.push(pokemon);
         } else {
@@ -47,32 +46,6 @@ let pokemonRepository = (function () {
         });
     }
 
-    // Add Pokemon to the list as a button
-    function addListItem(pokemon) {
-        let pokemonList = document.querySelector('.list-group');
-        
-        let listPokemon = document.createElement('li');
-        listPokemon.classList.add('list-group-item');
-        listPokemon.classList.add(pokemon.type); //add the type as a class to the list -- button color
-        
-        // Create a button element 
-        let button = document.createElement('button');
-        button.classList.add('pokemon-button', 'btn-block', 'btn-outline-light', 'text-dark');
-        
-    
-        // Set the button text to the Pokemon's name
-        button.innerHTML = pokemon.name;
-        
-        // Append the button to the list item and the list item to the Pokemon list
-        listPokemon.appendChild(button);
-        pokemonList.appendChild(listPokemon);
-    
-        // Add an event listener to the button to show the Pokemon's details when clicked
-        button.addEventListener('click', function(event) {
-            showDetails(pokemon);
-        });
-    }
-
     // Load the Pokemon details from the API
     function loadDetails(item) {
         let url = item.detailsURL;
@@ -89,13 +62,38 @@ let pokemonRepository = (function () {
         });
     }
 
-    // Show the Pokemon's details in a modal
+    // Add Pokemon to the list as a button
+    function addListItem(pokemon) {
+        let pokemonList = document.querySelector('.list-group'); 
+        
+        // Create a list item element
+        let listPokemon = document.createElement('li');
+        listPokemon.classList.add('list-group-item');
+        listPokemon.classList.add(pokemon.type); //add the type as a class to the list -- button color
+        
+        // Create a button element 
+        let button = document.createElement('button');
+        button.classList.add('pokemon-button', 'btn-block', 'btn-outline-light', 'text-dark');
+        button.innerHTML = pokemon.name;
+        
+        // Append the button to the list item and the list item to the Pokemon list
+        listPokemon.appendChild(button);
+        pokemonList.appendChild(listPokemon);
+    
+        // Add an event listener to the button to show the Pokemon's details when clicked
+        button.addEventListener('click', function(event) {
+            showDetails(pokemon);
+        });
+    }
+
+    // Show the Pokemon's details
     function showDetails(pokemon) {
         loadDetails(pokemon).then(function(){
             showModal(pokemon);
         }); 
     }
-    // Show the Pokemon's details in a modal
+
+    // Show the modal with the Pokemon's details
     function showModal(item) {
         let modalTitle = document.querySelector('#pokemonModalLabel');
         let modalImgContainer = document.querySelector('.image-background');
@@ -122,8 +120,11 @@ let pokemonRepository = (function () {
         // Show the modal
         let modal = new bootstrap.Modal(document.getElementById('pokemonModal'));
         modal.show();
-
-        // Add event listener to close button
+        addCloseButtonEventListener(modal);
+    }
+    
+    // Add event listener to close button on modal
+    function addCloseButtonEventListener(modal) {
         let closeButton = document.querySelector('.btn-close');
         closeButton.classList.add('close-button');
         closeButton.addEventListener('click', function() {
