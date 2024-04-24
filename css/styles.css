@@ -1,57 +1,74 @@
 :root {
-    --primary-color: #191919;
-    --font-color--white--: #ffffff;
+    --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 }
 
+/* Global Style*/
 body {
-    background-color: #ffffff;
-    color: #191929;
     font-family: var(--font-family);
     font-size: 16px;
+    background-color: #ffffff;
+    color: #191929;
 }
-/*
-* Navbar
-*/
+/* Navbar */
 .navbar-brand{
     font-size: 23px;
     font-weight: 900;
 }
 
-/*
-* Pokemon Buttons
-*/
-
-.row{
-    justify-content: center;
-}
-
+/* Pokemon Buttons */
 .pokemon-button{
-    background-color: rgba(255, 255, 255, 0);
-    font-family: var(--font-family);
-    text-transform: capitalize;
     font-size: 19px;
     font-weight: 600px;
-
-    justify-content: space-between;
-    align-items: center;
-
     border: none;
     padding: .5rem;
     margin: 0;
     width: 100%;
     height: 100%;
 }
-
+.pokemon-button .pokemon-image {
+    flex-shrink: 1;
+    min-width: 0;
+}
 .pokemon-image {
     height: 100px; 
-    object-fit: cover;
+    object-fit: contain;
     padding-right: 10px;
 }
 
-/*
-* Pokemon Type Colors--for listPokemon and modal-image background
-*/
+/* Scroll to Top Button */
+#scrollToTopButton {
+    display: none; 
+    position: fixed; 
+    bottom: 20px;  
+    right: 2%;
+    z-index: 99; 
+    border: none; 
+    outline: none; 
+    background-color: rgba(85, 85, 85, 0.6); 
+    color: white; 
+    padding: 5px 13px; 
+    border-radius: 100px; 
+    font-size: 18px; 
+}
 
+#scrollToTopButton:hover {
+    background-color: #555555; 
+    cursor: pointer; 
+}
+
+/* Modal */
+.image-background {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-image {
+    width: 100%;
+    max-height: 300px;
+}
+
+/* Pokemon Type Colors--for listPokemon and modal-image background */
 .fire{
     background-color: #F08030;
 }
@@ -72,7 +89,7 @@ body {
     background-color: #C03028;
 }
 .poison{
-    background-color: #A040A0;
+    background-color: #7E38B7;
 }
 .ground{
     background-color: #E0C068;
