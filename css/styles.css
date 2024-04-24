@@ -1,7 +1,6 @@
 :root {
     --primary-color: #191919;
     --font-color--white--: #ffffff;
-    --font-family: 'Open Sans', sans-serif; /*correct google font*/
 }
 
 body {
@@ -19,32 +18,38 @@ body {
 }
 
 /*
-* Pokemon list-group-items and Buttons
+* Pokemon Buttons
 */
 
-.list-group-item {
-    padding: .9rem;
+.row{
+    justify-content: center;
 }
 
 .pokemon-button{
-    background-color: rgba(255, 255, 255, 1);
+    background-color: rgba(255, 255, 255, 0);
     font-family: var(--font-family);
-    text-align: center;
     text-transform: capitalize;
-    font-size: 17px;
-    font-weight: 400px;
-    border-radius: 9px;
+    font-size: 19px;
+    font-weight: 600px;
+
+    justify-content: space-between;
+    align-items: center;
+
     border: none;
-    padding: .25rem;
+    padding: .5rem;
+    margin: 0;
+    width: 100%;
+    height: 100%;
 }
 
-.pokemon-button:hover{
-    background-color: rgba(255, 255, 255, 0.6);
-    cursor: pointer;
+.pokemon-image {
+    height: 100px; 
+    object-fit: cover;
+    padding-right: 10px;
 }
 
 /*
-* Pokemon Type Colors--for button and modal-image background
+* Pokemon Type Colors--for listPokemon and modal-image background
 */
 
 .fire{

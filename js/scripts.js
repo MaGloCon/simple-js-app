@@ -64,17 +64,35 @@ let pokemonRepository = (function () {
 
     // Add Pokemon to the list as a button
     function addListItem(pokemon) {
-        let pokemonList = document.querySelector('.list-group'); 
+        let pokemonList = document.querySelector('.row'); 
         
         // Create a list item element
-        let listPokemon = document.createElement('li');
-        listPokemon.classList.add('list-group-item');
-        listPokemon.classList.add(pokemon.type); //add the type as a class to the list -- button color
+        let listPokemon = document.createElement('div', 'pokemon-div');
+        listPokemon.classList.add('col-9', 'col-md-4', 'col-lg-3', 'border', 'm-1', 'rounded-lg');
+        listPokemon.classList.add(pokemon.type); //add the type as a class to the list for background-color
         
         // Create a button element 
         let button = document.createElement('button');
-        button.classList.add('pokemon-button', 'btn-block', 'btn-outline-light', 'text-dark');
-        button.innerHTML = pokemon.name;
+        button.classList.add('pokemon-button', 'btn', 'd-flex');
+        // button.innerHTML = pokemon.name;
+
+        // Create an image element
+        let image = document.createElement('img');
+        image.src = pokemon.imageUrl;
+        image.alt = `Image of ${pokemon.name}`;
+        image.classList.add('pokemon-image', 'img-fluid'); 
+        button.appendChild(image);
+
+        // Create textNode for pokemon name and span element for styling 
+        let span = document.createElement('span');
+        span.classList.add('text-white'); 
+        let textNode = document.createTextNode(pokemon.name);
+        span.appendChild(textNode);
+        button.appendChild(span);
+
+        // Set the button attributes for the modal
+        button.setAttribute('data-toggle', 'modal');
+        button.setAttribute('data-target', '#pokemonModal');
         
         // Append the button to the list item and the list item to the Pokemon list
         listPokemon.appendChild(button);
@@ -117,20 +135,20 @@ let pokemonRepository = (function () {
         modalTypes.innerText = `Types: ${item.types.map(type => `${type.type.name.charAt(0).toUpperCase()}${type.type.name.slice(1)}`).join(', ')}`;
         modalAbilities.innerText = `Abilities: ${item.abilities.map(ability => `${ability.ability.name.charAt(0).toUpperCase()}${ability.ability.name.slice(1)}`).join(', ')}`;
 
-        // Show the modal
-        let modal = new bootstrap.Modal(document.getElementById('pokemonModal'));
-        modal.show();
-        addCloseButtonEventListener(modal);
+        // // Show the modal
+        // let modal = new bootstrap.Modal(document.getElementById('pokemonModal'));
+        // modal.show();
+        // addCloseButtonEventListener(modal);
     }
 
     // Add event listener to close button on modal
-    function addCloseButtonEventListener(modal) {
-        let closeButton = document.querySelector('.btn-close');
-        closeButton.classList.add('close-button');
-        closeButton.addEventListener('click', function() {
-            modal.hide();
-        });
-    }
+    // function addCloseButtonEventListener(modal) {
+    //     let closeButton = document.querySelector('.btn-close');
+    //     closeButton.classList.add('close-button');
+    //     closeButton.addEventListener('click', function() {
+    //         modal.hide();
+    //     });
+    // }
 
     // Search icon and searchBar toggle
     let searchIcon = document.querySelector('#search-icon');
