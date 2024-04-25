@@ -10,7 +10,7 @@ let pokemonRepository = (function () {
         return string.charAt(0).toUpperCase() + string.slice(1);
     }
 
-    
+    let unusedVariable = 
     // Add Pokemon to the list
     function add(pokemon) {
         if (
