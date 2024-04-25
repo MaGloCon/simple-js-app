@@ -30,44 +30,42 @@ let pokemonRepository = (function () {
     }
 
     // Load the Pokemon list from the API
-    function loadList() {
-        return fetch(`${apiUrl}?offset=${offset}&limit=${limit}`).then(function(response) {
-            return response.json();
-        }).then(function(json) {
-            let promises = json.results.map(function(item) { 
-                return fetch(item.url).then(function(response) {
-                    return response.json();
-                }).then(function(details) {
-                    let pokemon = { 
-                        name: item.name,
-                        detailsURL: item.url,
-                        imageUrl: details.sprites.other.dream_world.front_default,
-                        type: details.types[0].type.name, //for button color; set the type to the first type 
-                    };
-                    if (details.types.length > 1 && pokemon.type === 'normal') { //for button color: to set the type to the second type if the first type is normal
-                        pokemon.type = details.types[1].type.name;
-                    }
-                    add(pokemon); 
-                });
+    async function loadList() {
+        const response = await fetch(`${apiUrl}?offset=${offset}&limit=${limit}`);
+        const json = await response.json();
+        let promises = json.results.map(function (item) {
+            return fetch(item.url).then(function (response_1) {
+                return response_1.json();
+            }).then(function (details) {
+                let pokemon = {
+                    name: item.name,
+                    detailsURL: item.url,
+                    imageUrl: details.sprites.other.dream_world.front_default,
+                    type: details.types[0].type.name, //for button color; set the type to the first type 
+                };
+                if (details.types.length > 1 && pokemon.type === 'normal') { //for button color: to set the type to the second type if the first type is normal
+                    pokemon.type = details.types[1].type.name;
+                }
+                add(pokemon);
             });
-            return Promise.all(promises); //return a promise that resolves when all the details have been fetched
         });
+        return await Promise.all(promises);
     }
 
-    // Load the Pokemon details from the API
-    function loadDetails(item) {
+    // Load the Pokemon details from the API -- 
+    async function loadDetails(item) { 
         let url = item.detailsURL;
-        return fetch(url).then(function (response) {
-            return response.json();
-        }).then(function (details) {
-            item.imgURL = details.sprites.other.dream_world.front_default; 
+        try {
+            const response = await fetch(url);
+            const details = await response.json();
+            item.imgURL = details.sprites.other.dream_world.front_default;
             item.height = details.height / 10; //convert height (decimeters) to meters
             item.weight = details.weight / 10; //convert weight (hectograms) to kilograms
             item.types = details.types;
             item.abilities = details.abilities;
-        }).catch(function (e) {
+        } catch (e) {
             console.error(e);
-        });
+        }
     }
 
     // Show the Pokemon's details in the modal
@@ -101,6 +99,9 @@ let pokemonRepository = (function () {
         listPokemon.append(button);
         $('.row').append(listPokemon)
                  .addClass('justify-content-center');
+        
+        // Add a delay in showing the Pokemon list for smoother loading and better user experience
+        setTimeout(() => listPokemon.addClass('visible'), 100);
         
         // Show Pokemon's details when Pokemon button is clicked
         button.click(function() {
