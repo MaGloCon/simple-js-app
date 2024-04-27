@@ -1,6 +1,6 @@
 # Simple JS App - Pokedex
 
-This project is a web-based Pokedex application that
+This project is a web-based Pokedex application that fetches data from the PokeAPI. It displays a list of Pokemon color-code by type with their images, and allows users to view more details about each Pokemon in a modal.
 
 ## Features
 
